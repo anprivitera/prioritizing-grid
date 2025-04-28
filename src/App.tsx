@@ -1,3 +1,5 @@
+import { Typography } from "@mui/material";
+
 export default function App() {
-  return <h1>Prioritizing Grid</h1>
+  return <Typography component='h1'>Prioritizing Grid</Typography>
 }
