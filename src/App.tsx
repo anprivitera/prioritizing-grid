@@ -4,14 +4,14 @@ import { ListItem } from "./ListItem";
 
 export default function App() {
 
-  const [fields, setFields] = useState([{ value: '' }]);
-  return (
+  const [fields, setFields] = useState([{ id: Date.now(), value: '' }]);
+    return (
     <>
       <Typography component='h1' variant='h6'>Prioritizing Grid</Typography>
       {
-        fields.map(({ value }, index) => (
+        fields.map(({ id, value }, index) => (
           <ListItem
-            key={`item${index}`}
+            key={id}
             index={index}
             value={value}
             lastItem={index === fields.length - 1}
@@ -20,7 +20,8 @@ export default function App() {
               newFields[i].value = v;
               setFields(newFields);
             }}
-            onAdd={() => setFields([...fields, { value: '' }])}
+            onAdd={() => setFields([...fields, { id: Date.now(), value: '' }])}
+            onDelete={(i) => setFields(fields.filter((_, index) => index !== i))}
           />
         ))
       }
