@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ListItem } from "./ListItem";
 import { Results } from "./Results";
 import { PrioritizeDialog } from "./PrioritizeDialog";
@@ -30,6 +30,21 @@ export default function App() {
     setIsComparisonComplete(false);
     setOpen(true);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) {
+        if (!fields.some(f => f.value === '') && 
+            !fields.some((field, index) => hasDuplicateValue(fields, index, field.value)) && 
+            fields.length >= 3) {
+          handleClickOpen();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [fields]);
 
   return (
     <Stack spacing={2} sx={{ padding: '20px', margin: '10px' }}>

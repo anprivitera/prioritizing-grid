@@ -17,6 +17,7 @@ export function ListItem(props: FieldProps) {
     <Stack direction="row" spacing={1}>
       <Typography>{index + 1}.</Typography>
       <TextField
+        autoFocus
         size="small"
         error={hasDuplicate}
         helperText={hasDuplicate ? "Duplicate value" : ""}
@@ -24,6 +25,9 @@ export function ListItem(props: FieldProps) {
         variant="standard"
         defaultValue={value}
         onChange={(e) => {onChange(index, e.target.value)}}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && lastItem && value !== '') onAdd()
+        }}
         slotProps={{
           input: {
             endAdornment: index > 0 && (
