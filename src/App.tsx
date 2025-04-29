@@ -10,6 +10,11 @@ interface Field {
   score?: number;
 }
 
+const hasDuplicateValue = (fields: Field[], index: number, value: string) => 
+  fields.some((otherField, otherIndex) => 
+    index !== otherIndex && value === otherField.value && value !== ''
+  );
+
 export default function App() {
   const [fields, setFields] = 
     useState<Field[]>([{ id: Date.now(), value: '', score: 0 }]);
@@ -36,6 +41,7 @@ export default function App() {
             index={index}
             value={value}
             lastItem={index === fields.length - 1}
+            hasDuplicate={hasDuplicateValue(fields, index, value)}
             onChange={(i: number, v: string) => {
               const newFields = [...fields];
               newFields[i].value = v;
@@ -55,7 +61,11 @@ export default function App() {
       }
       <Button 
         variant="contained" 
-        disabled={fields.length < 3 || fields.some(f => f.value === '')}
+        disabled={
+          fields.length < 3 || 
+          fields.some(f => f.value === '') ||
+          fields.some((field, index) => hasDuplicateValue(fields, index, field.value))
+        }
         sx={{ marginBottom: '10px', maxWidth: '385px' }}
         onClick={handleClickOpen}
       >
