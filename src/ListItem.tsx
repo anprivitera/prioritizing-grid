@@ -41,7 +41,7 @@ export function ListItem(props: FieldProps) {
         }
         sx={{ 
           '&:hover .MuiIconButton-root': { opacity: 1 },
-          width: '300px',
+          width: '290px',
           '& .MuiInput-root': { width: '100%' }
         }}
       />
