@@ -8,15 +8,18 @@ interface FieldProps {
   onChange: (index: number, value: string) => void;
   onAdd: () => void;
   onDelete: (index: number) => void;
+  hasDuplicate?: boolean;  // New prop
 }
 
 export function ListItem(props: FieldProps) {
-  const { index, value, lastItem, onChange, onAdd, onDelete } = props
+  const { index, value, lastItem, onChange, onAdd, onDelete, hasDuplicate } = props
   return (
     <Stack direction="row" spacing={1}>
       <Typography>{index + 1}.</Typography>
       <TextField
         size="small"
+        error={hasDuplicate}
+        helperText={hasDuplicate ? "Duplicate value" : ""}
         hiddenLabel
         variant="standard"
         defaultValue={value}
